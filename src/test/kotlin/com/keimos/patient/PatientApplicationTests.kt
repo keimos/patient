@@ -44,7 +44,7 @@ class PatientApplicationTests @Autowired constructor(
 			getRootUrl(),
 			List::class.java
 		)
-
+		//Assertions
 		Assertions.assertEquals(200, response.statusCode.value())
 		Assertions.assertNotNull(response.body)
 		Assertions.assertEquals(defaultPatientId, response.body?.id)
