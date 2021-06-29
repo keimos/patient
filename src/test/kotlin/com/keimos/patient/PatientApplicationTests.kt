@@ -1,6 +1,7 @@
 package com.keimos.patient
 
 import com.keimos.data.Patient
+import com.keimos.data.PatientRepository
 import org.bson.types.ObjectId
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -47,7 +48,22 @@ class PatientApplicationTests @Autowired constructor(
 		//Assertions
 		Assertions.assertEquals(200, response.statusCode.value())
 		Assertions.assertNotNull(response.body)
+		Assertions.assertEquals(defaultPatientId, response.body?.size)
+	}
+
+	@Test
+	fun `should return one patient by id`() {
+		saveOnePatient()
+
+		val response = restTemplate.getForEntity(
+			getRootUrl() + "/$defaultPatientId",
+			Patient::class.java
+		)
+		//Assertions
+		Assertions.assertEquals(200, response.statusCode.value())
+		Assertions.assertNotNull(response.body)
 		Assertions.assertEquals(defaultPatientId, response.body?.id)
+
 	}
 
 }
